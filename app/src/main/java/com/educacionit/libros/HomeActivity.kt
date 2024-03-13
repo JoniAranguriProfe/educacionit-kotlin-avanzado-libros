@@ -74,7 +74,7 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun agregarNuevoLibroAdapter(nuevoLibro: Libro) {
-        val libros = adapter.libros
+        val libros = adapter.libros.toMutableList()
         libros.add(nuevoLibro)
         adapter.libros = libros
     }
