@@ -20,7 +20,15 @@ class BooksRepository(context: Context) {
 
     fun getBooks(): List<Libro> = booksDao.queryForAll()
 
-    fun addBook(book: Libro) {
+    fun addBook(book: Libro): ResultDBOperation = try {
         booksDao.create(book)
+        ResultOk
+    } catch (e: SQLException) {
+        e.printStackTrace()
+        ResultError
     }
 }
+
+sealed class ResultDBOperation
+object ResultOk : ResultDBOperation()
+object ResultError : ResultDBOperation()
