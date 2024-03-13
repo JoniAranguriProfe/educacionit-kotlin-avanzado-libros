@@ -1,11 +1,22 @@
-package com.educacionit.libros;
+package com.educacionit.libros.model;
+
+import static com.educacionit.libros.model.Libro.TABLE_BOOK;
+
+import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.table.DatabaseTable;
 
 import java.io.Serializable;
 
+@DatabaseTable(tableName = TABLE_BOOK)
 public class Libro implements Serializable {
+    public static final String TABLE_BOOK = "book";
 
+    @DatabaseField(id = true)
     private Integer id;
+    @DatabaseField
     private String nombre;
+    @DatabaseField
+
     private String autor;
 
     public Libro() {

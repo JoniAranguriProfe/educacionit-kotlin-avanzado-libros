@@ -6,6 +6,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.educacionit.libros.model.Libro
 
 class AgregarLibroActivity : AppCompatActivity() {
     private lateinit var etNombreLibro: EditText
