@@ -66,11 +66,7 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun getLibros(): List<Libro> {
-        return listOf(
-            Libro(1, "Harry Potter", "J.K. Rowling"),
-            Libro(2, "Game of Thrones", "George Martin"),
-            Libro(3, "Maze Runner", "James Dashner")
-        )
+        return emptyList()
     }
 
     private fun agregarNuevoLibroAdapter(nuevoLibro: Libro) {
