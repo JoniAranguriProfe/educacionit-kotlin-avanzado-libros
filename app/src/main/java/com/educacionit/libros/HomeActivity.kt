@@ -9,6 +9,8 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.RecyclerView
+import com.educacionit.libros.database.BooksRepository
+import com.educacionit.libros.model.Libro
 
 class HomeActivity : AppCompatActivity() {
 
@@ -18,11 +20,10 @@ class HomeActivity : AppCompatActivity() {
         Toast.makeText(this@HomeActivity, it.nombre, Toast.LENGTH_SHORT).show()
     }
     private val startForResult = registerForActivityResult(
-        ActivityResultContracts.StartActivityForResult()
+            ActivityResultContracts.StartActivityForResult()
     ) { result ->
-        if (result.resultCode == RESULT_OK) {
-            val nuevoLibro = result.data?.getSerializableExtra(LIBRO) as? Libro
-            nuevoLibro?.let { agregarNuevoLibroAdapter(it) }
+        if (result.resultCode != RESULT_OK) {
+            Toast.makeText(this, "Algo falló durante la creación del libro, intente nuevamente...", Toast.LENGTH_LONG).show()
         }
     }
 
@@ -32,6 +33,10 @@ class HomeActivity : AppCompatActivity() {
 
         setupToolbar()
         saludarUsuario()
+    }
+
+    override fun onResume() {
+        super.onResume()
         setupAdapter()
     }
 
@@ -55,22 +60,14 @@ class HomeActivity : AppCompatActivity() {
 
     private fun goToAgregarLibro() {
         startForResult.launch(
-            Intent(this@HomeActivity, AgregarLibroActivity::class.java)
+                Intent(this@HomeActivity, AgregarLibroActivity::class.java)
         )
     }
 
     private fun setupAdapter() {
         rvLibros = findViewById(R.id.rvLibros)
         rvLibros.adapter = adapter
-        adapter.libros = getLibros()
-    }
-
-    private fun getLibros(): List<Libro> {
-        return listOf(
-            Libro(1, "Harry Potter", "J.K. Rowling"),
-            Libro(2, "Game of Thrones", "George Martin"),
-            Libro(3, "Maze Runner", "James Dashner")
-        )
+        adapter.libros = BooksRepository(this).getBooks()
     }
 
     private fun agregarNuevoLibroAdapter(nuevoLibro: Libro) {

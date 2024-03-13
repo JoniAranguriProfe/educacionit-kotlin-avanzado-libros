@@ -6,6 +6,10 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.educacionit.libros.database.BooksRepository
+import com.educacionit.libros.database.ResultError
+import com.educacionit.libros.database.ResultOk
+import com.educacionit.libros.model.Libro
 
 class AgregarLibroActivity : AppCompatActivity() {
     private lateinit var etNombreLibro: EditText
@@ -30,16 +34,21 @@ class AgregarLibroActivity : AppCompatActivity() {
             val libro = Libro()
             libro.nombre = etNombreLibro.text.toString()
             libro.autor = etAutor.text.toString()
-            setResult(
-                RESULT_OK, Intent().putExtra(HomeActivity.LIBRO, libro)
-            )
+            setResult(saveBook(libro))
             finish()
         } else {
             Toast.makeText(
-                this@AgregarLibroActivity,
-                "Completar todos los campos",
-                Toast.LENGTH_SHORT
+                    this@AgregarLibroActivity,
+                    "Completar todos los campos",
+                    Toast.LENGTH_SHORT
             ).show()
+        }
+    }
+
+    private fun saveBook(newBook: Libro): Int {
+        return when (BooksRepository(this).addBook(newBook)) {
+            is ResultError -> RESULT_CANCELED
+            is ResultOk -> RESULT_OK
         }
     }
 
