@@ -11,6 +11,9 @@ import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.RecyclerView
 import com.educacionit.libros.database.BooksRepository
 import com.educacionit.libros.model.Libro
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class HomeActivity : AppCompatActivity() {
 
@@ -67,7 +70,9 @@ class HomeActivity : AppCompatActivity() {
     private fun setupAdapter() {
         rvLibros = findViewById(R.id.rvLibros)
         rvLibros.adapter = adapter
-        adapter.libros = BooksRepository(this).getBooks()
+        CoroutineScope(Dispatchers.Main).launch {
+            adapter.libros = BooksRepository(this@HomeActivity).getBooks()
+        }
     }
 
     private fun agregarNuevoLibroAdapter(nuevoLibro: Libro) {

@@ -1,15 +1,20 @@
 package com.educacionit.libros.model
 
-import com.j256.ormlite.field.DatabaseField
-import com.j256.ormlite.table.DatabaseTable
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 
-@DatabaseTable(tableName = TABLE_BOOK)
+@Entity(tableName = TABLE_BOOK)
 data class Libro(
-        @DatabaseField(id = true)
+        @PrimaryKey
+        @ColumnInfo(name = COLUMN_ID)
         var id: Int? = null,
-        @DatabaseField
+        @ColumnInfo(name = COLUMN_NAME)
         var nombre: String? = null,
-        @DatabaseField
+        @ColumnInfo(name = COLUMN_AUTHOR)
         var autor: String? = null)
 
 const val TABLE_BOOK = "book"
+const val COLUMN_ID = "id"
+const val COLUMN_NAME = "name"
+const val COLUMN_AUTHOR = "author"
