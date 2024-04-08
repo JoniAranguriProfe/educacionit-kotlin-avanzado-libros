@@ -5,11 +5,17 @@ import com.j256.ormlite.table.DatabaseTable
 
 @DatabaseTable(tableName = TABLE_BOOK)
 data class Libro(
-        @DatabaseField(id = true)
-        var id: Int? = null,
-        @DatabaseField
-        var nombre: String? = null,
-        @DatabaseField
-        var autor: String? = null)
+    @DatabaseField
+    var nombre: String? = null,
+
+    @DatabaseField
+    var autor: String? = null
+) {
+    @DatabaseField(id = true, useGetSet = true)
+    var id: String = ""
+        get() {
+            return "${nombre}_$autor"
+        }
+}
 
 const val TABLE_BOOK = "book"
