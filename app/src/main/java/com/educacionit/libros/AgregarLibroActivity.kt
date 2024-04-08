@@ -36,9 +36,7 @@ class AgregarLibroActivity : AppCompatActivity() {
 
     private fun guardarLibro() {
         if (datosValidos()) {
-            val libro = Libro()
-            libro.nombre = etNombreLibro.text.toString()
-            libro.autor = etAutor.text.toString()
+            val libro = Libro(nombre = etNombreLibro.text.toString(), autor = etAutor.text.toString())
             CoroutineScope(Dispatchers.Main).launch {
                 setResult(saveBook(libro))
                 finish()
